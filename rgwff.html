@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoi Gen - Elite Account Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #000000;
+            --secondary-bg: #0a0a0a;
+            --card-bg: #111111;
+            --border-color: #1a1a1a;
+            --accent-color: #87CEEB;
+            --accent-secondary: #B0E0E6;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --glow-color: rgba(135, 206, 235, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Advanced Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(135, 206, 235, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(176, 224, 230, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(135, 206, 235, 0.03) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgShift 15s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Header */
+        header {
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 1s ease-out;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--glow-color);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            letter-spacing: -2px;
+        }
+
+        @keyframes logoGlow {
+            0% { 
+                filter: drop-shadow(0 0 5px var(--glow-color));
+                transform: scale(1);
+            }
+            100% { 
+                filter: drop-shadow(0 0 20px var(--glow-color));
+                transform: scale(1.02);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        /* Epic Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, 
+                var(--accent-color) 0%, 
+                #ffffff 25%, 
+                var(--accent-secondary) 50%, 
+                #ffffff 75%, 
+                var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 300%;
+            animation: heroGradient 4s ease-in-out infinite, heroFloat 6s ease-in-out infinite;
+            letter-spacing: -4px;
+            text-shadow: 0 0 50px var(--glow-color);
+            line-height: 0.9;
+        }
+
+        @keyframes heroGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+            letter-spacing: 1px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.5s ease-out 1s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+            color: var(--primary-bg);
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(135, 206, 235, 0.3);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(135, 206, 235, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 10px 40px rgba(135, 206, 235, 0.2);
+        }
+
+        .cta-secondary:hover {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+            box-shadow: 0 20px 60px rgba(135, 206, 235, 0.4);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            animation: float 8s linear infinite;
+            opacity: 0.6;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .floating-element:nth-child(odd) {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px rgba(176, 224, 230, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Premium Pricing Section */
+        .pricing {
+            padding: 150px 0;
+            background: linear-gradient(180deg, var(--primary-bg), var(--secondary-bg));
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 80px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(135, 206, 235, 0.3)); }
+            100% { filter: drop-shadow(0 0 25px rgba(135, 206, 235, 0.6)); }
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .pricing-card {
+            background: linear-gradient(145deg, var(--card-bg), rgba(17, 17, 17, 0.8));
+            border-radius: 25px;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            animation: cardSlide 0.8s ease-out;
+        }
+
+        @keyframes cardSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(135, 206, 235, 0.1), 
+                rgba(176, 224, 230, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 25px;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-20px) rotateX(5deg);
+            border-color: var(--accent-color);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 50px var(--glow-color);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--accent-color);
+            position: relative;
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(135, 206, 235, 0.2);
+        }
+
+        .pricing-card.popular::after {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 25px;
+            right: -35px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+            color: var(--primary-bg);
+            padding: 8px 50px;
+            transform: rotate(45deg);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px var(--glow-color);
+            letter-spacing: -1px;
+        }
+
+        .price-section {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 15px 0;
+            font-weight: 400;
+        }
+
+        .price .amount {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .features {
+            list-style: none;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .features li {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .features li:hover {
+            background: rgba(135, 206, 235, 0.05);
+            border-radius: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-label {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .feature-value {
+            color: var(--accent-color);
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .buy-button {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+            color: var(--primary-bg);
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .buy-button:hover::before {
+            left: 100%;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(135, 206, 235, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .free-tier .buy-button {
+            background: linear-gradient(135deg, #333333, #555555);
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .free-tier .buy-button:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Elite Discord Section */
+        .discord-section {
+            padding: 120px 0;
+            text-align: center;
+            background: linear-gradient(135deg, 
+                rgba(135, 206, 235, 0.05), 
+                rgba(176, 224, 230, 0.05));
+            position: relative;
+        }
+
+        .discord-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #5865F2, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        .discord-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .discord-button {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            color: white;
+            padding: 25px 60px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(88, 101, 242, 0.3);
+        }
+
+        .discord-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .discord-button:hover::before {
+            left: 100%;
+        }
+
+        .discord-button:hover {
+            background: linear-gradient(135deg, #4752C4, #3c45a3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(88, 101, 242, 0.5);
+        }
+
+        /* Advanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+                letter-spacing: -2px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button, .discord-button {
+                width: 90%;
+                max-width: 300px;
+            }
+        }
+
+        /* Ultra-smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent-color), var(--accent-secondary));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--accent-secondary), var(--accent-color));
+        }
+    </style>
+</head>
+<body>
+    <!-- Advanced Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-gradient"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating-element" style="left: 5%; animation-delay: 0s; animation-duration: 12s;"></div>
+    <div class="floating-element" style="left: 15%; animation-delay: 2s; animation-duration: 8s;"></div>
+    <div class="floating-element" style="left: 25%; animation-delay: 4s; animation-duration: 10s;"></div>
+    <div class="floating-element" style="left: 35%; animation-delay: 1s; animation-duration: 14s;"></div>
+    <div class="floating-element" style="left: 45%; animation-delay: 3s; animation-duration: 9s;"></div>
+    <div class="floating-element" style="left: 55%; animation-delay: 5s; animation-duration: 11s;"></div>
+    <div class="floating-element" style="left: 65%; animation-delay: 2.5s; animation-duration: 13s;"></div>
+    <div class="floating-element" style="left: 75%; animation-delay: 4.5s; animation-duration: 7s;"></div>
+    <div class="floating-element" style="left: 85%; animation-delay: 1.5s; animation-duration: 15s;"></div>
+    <div class="floating-element" style="left: 95%; animation-delay: 3.5s; animation-duration: 6s;"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">ZOI GEN</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#discord">Discord</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ZOI GEN</h1>
+            <p class="hero-subtitle">Elite Account Generator - Unleash Ultimate Power</p>
+            <div class="hero-cta">
+                <a href="#pricing" class="cta-button">⚡ Get Premium Access</a>
+                <a href="#discord" class="cta-button cta-secondary">🎮 Join Elite Community</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">ZOI MARKET | ELITE GENERATOR PRICING</h2>
+            
+            <div class="pricing-grid">
+                <!-- Free Tier -->
+                <div class="pricing-card free-tier">
+                    <h3 class="card-title">FREE</h3>
+                    <div class="price-section">
+                        <div class="price">
+                            <span class="amount">$0</span>
+                        </div>
+                        <div class="price">Basic Access</div>
+                    </div>
+                    <ul class="features">
+                        <li>
+                            <span class="feature-label">Cooldown</span>
+                            <span class="feature-value">5 min</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Hit Rate</span>
+                            <span class="feature-value">Low (~30%)</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Hit Reqs</span>
+                            <span class="feature-value">Limited</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Support</span>
+                            <span class="feature-value">Community</span>
+                        </li>
+                    </ul>
+                    <button class="buy-button" onclick="window.open('https://discord.gg/AvM5nGAAx9', '_blank')">
+                        🚀 START FREE
+                    </button>
+                </div>
+
+                <!-- Premium Tier -->
+                <div class="pricing-card">
+                    <h3 class="card-title">PREMIUM</h3>
+                    <div class="price-section">
+                        <div class="price">
+                            <span class="amount">$5</span> / Month
+                        </div>
+                        <div class="price">
+                            <span class="amount">$15</span> / Lifetime
+                        </div>
+                    </div>
+                    <ul class="features">
+                        <li>
+                            <span class="feature-label">Cooldown</span>
+                            <span class="feature-value">90 sec</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Hit Rate</span>
+                            <span class="feature-value">High (~80%)</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Hit Reqs</span>
+                            <span class="feature-value">None</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Support</span>
+                            <span class="feature-value">Priority</span>
+                        </li>
+                    </ul>
+                    <button class="buy-button" onclick="window.open('https://discord.gg/AvM5nGAAx9', '_blank')">
+                        ⚡ BUY NOW
+                    </button>
+                </div>
+
+                <!-- Ultra Tier -->
+                <div class="pricing-card popular">
+                    <h3 class="card-title">ULTRA</h3>
+                    <div class="price-section">
+                        <div class="price">
+                            <span class="amount">$15</span> / Month
+                        </div>
+                        <div class="price">
+                            <span class="amount">$25</span> / Lifetime
+                        </div>
+                    </div>
+                    <ul class="features">
+                        <li>
+                            <span class="feature-label">Cooldown</span>
+                            <span class="feature-value">30 sec</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Hit Rate</span>
+                            <span class="feature-value">Guaranteed (~95%)</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Hit Reqs</span>
+                            <span class="feature-value">None</span>
+                        </li>
+                        <li>
+                            <span class="feature-label">Support</span>
+                            <span class="feature-value">VIP (24/7)</span>
+                        </li>
+                    </ul>
+                    <button class="buy-button" onclick="window.open('https://discord.gg/AvM5nGAAx9', '_blank')">
+                        👑 GET ELITE ACCESS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="discord-section" id="discord">
+        <div class="container">
+            <h2 class="discord-title">JOIN THE ELITE</h2>
+            <p class="discord-subtitle">
+                Exclusive access • Priority support • VIP community • Instant activation
+            </p>
+            <a href="https://discord.gg/AvM5nGAAx9" target="_blank" class="discord-button">
+                🎮 JOIN DISCORD ELITE
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Ultra-smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Advanced header
